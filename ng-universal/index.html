@@ -1,0 +1,404 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>Angular Advanced - Angular Universal</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+
+    <link rel="icon" href="../common/img/favicon.ico">
+
+    <link rel="stylesheet" href="../reveal.js-3.6.0/css/reveal.css">
+    <link rel="stylesheet" href="../reveal.js-3.6.0/css/theme/white.css">
+    <link rel="stylesheet" href="../common/css/common.css">
+
+    <!-- Theme used for syntax highlighting of code -->
+    <link rel="stylesheet" href="../reveal.js-3.6.0/lib/css/zenburn.css">
+
+    <!-- Printing and PDF exports -->
+    <script>
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = window.location.search.match(/print-pdf/gi) ? '../reveal.js-3.6.0/css/print/pdf.css' : '../reveal.js-3.6.0/css/print/paper.css';
+        document.getElementsByTagName('head')[0].appendChild(link);
+    </script>
+    <style>
+        .ng-universal {
+            --bg-color: var(--cap-white);
+            --link-color: var(--cap-gray);
+        }
+        code:not(.hljs) {
+            color: var(--cap-gray);
+        }
+    </style>
+</head>
+<body class="ng-universal">
+<div class="devon reveal">
+    <div class="slides">
+        <section data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
+            <h3 class="white">Angular Universal</h3>
+            <h4 class="white">Mai 2018 State</h4>
+            <img height="250em" class="no-background no-border no-margin no-shadow" src="../common/img/ng-universal-logo.svg">
+        </section>
+        <section data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
+            <h3 class="white">Why Angular Universal?</h3>
+            <ul class="white">
+                <li>Performance / User Experience</li>
+                <li>Search Engine Optimization / Social Media Crawlers</li>
+            </ul>
+        </section>
+        <section data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
+            <h3 class="white">Let's start</h3>
+            <ol class="white">
+                <li>Install prerequisites as described <a href="https://github.com/devonfw-ng-adv-training/ng-universal/tree/0-start#install-prerequisites" target="_blank">here</a></li>
+                <li>Start a sample app as described <a href="https://github.com/devonfw-ng-adv-training/ng-universal/tree/0-start#clone-install-dependencies-and-run" target="_blank">here</a></li>
+                <li>
+                    <div style="display: flex; flex-direction: column">
+                        <div><code>npm start</code> does the following:</div>
+                        <img style="align-self: center" height="300em" src="img/ng-unversal-set-up.svg">
+                    </div>
+                </li>
+            </ol>
+        </section>
+        <section data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
+            <h3 class="white" style="text-transform: none">Add an Universal bundle</h3>
+            <div style="display: flex; flex-direction: column">
+                <pre style="margin: 0"><code class="hljs bash" data-trim>ng generate universal ssr-app</code></pre>
+                <p style="align-self: flex-start; margin: .5em 0" class="white">It creates a new app which:</p>
+            </div>
+            <ol class="white">
+                <li>shares sources with the existing one</li>
+                <li>has a different entry point: <code>main.server.ts</code></li>
+                <li>uses a separate TypeScript configuration file: <code>tsconfig.server.json</code></li>
+                <li>outputs its build to the <code>dist-server</code> folder</li>
+            </ol>
+        </section>
+        <section data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
+            <h3 class="white" style="text-transform: none">Build the Universal bundle</h3>
+            <div style="display: flex; flex-direction: column">
+                <pre style="margin: 0"><code class="hljs bash" data-trim>npm install</code></pre>
+                <p style="align-self: flex-start; margin: .5em 0" class="white">installs <code>@angular/platform-server</code></p>
+            </div>
+            <div style="display: flex; flex-direction: column">
+                <pre style="margin: 0"><code class="hljs bash" data-trim>ng build --prod --app=ssr-app --output-hashing=false</code></pre>
+                <p style="align-self: flex-start; margin: .5em 0 0; text-align: left" class="white">builds the Universal bundle outputting it to the <code>dist-server</code> folder</p>
+                <p style="align-self: flex-start; margin: 0; text-align: left" class="white">we set <code>--output-hashing=false</code> as we won't benefit from the build hashes in file names on the server</p>
+            </div>
+        </section>
+        <section data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
+            <h3 class="white" style="text-transform: none"> Add a convenience script to <code>package.json</code></h3>
+            <div style="display: flex; flex-direction: column">
+                <pre style="margin: 0; width: 100%"><code class="hljs json" data-trim>
+                      "scripts": {
+                        "build:server-app": "ng build --prod --app=ssr-app --output-hashing=false"
+                      }
+                </code></pre>
+                <p style="align-self: flex-start; margin: .5em 0" class="white">which can then be run like this:</p>
+                <pre style="margin: 0"><code class="hljs bash" data-trim>npm run build:server-app</code></pre>
+            </div>
+        </section>
+        <section data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
+            <h3 class="white" style="text-transform: none">Add a convenience script to <code>package.json</code></h3>
+            <div style="display: flex; flex-direction: column">
+                <pre style="margin: 0; width: 100%"><code class="hljs json" data-trim>
+                      "scripts": {
+                        "build:server-app": "ng build --prod --app=ssr-app --output-hashing=false"
+                      }
+                </code></pre>
+                <p style="align-self: flex-start; margin: .5em 0" class="white">which can then be run like this:</p>
+                <pre style="margin: 0"><code class="hljs bash" data-trim>npm run build:server-app</code></pre>
+            </div>
+        </section>
+        <section data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
+            <h3 class="white" style="text-transform: none">Pre-rendering the <code>/home</code> route (1)</h3>
+            <div style="display: flex; flex-direction: column">
+                <p style="align-self: flex-start; margin: .5em 0; text-align: left" class="white">Create an npm script named <code>prerender.ts</code> in the <code>prerender</code> folder:</p>
+                <pre style="margin: 0; width: 100%"><code class="hljs js" data-trim>
+import 'zone.js/dist/zone-node';
+import {renderModuleFactory} from '@angular/platform-server';
+import {writeFileSync} from 'fs';
+
+const {AppServerModuleNgFactory} = require('../dist-server/main.bundle');
+
+renderModuleFactory(AppServerModuleNgFactory, {
+  document: '<app-root></app-root>',
+  url: '/home'
+})
+  .then(html => {
+    console.log('Pre-rendering successful, saving prerender.html...');
+    writeFileSync(__dirname + '/prerender.html', html);
+    console.log('Done');
+  })
+  .catch(error => {
+    console.error('Error occurred:', error);
+  });
+                </code></pre>
+            </div>
+        </section>
+        <section data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
+            <h3 class="white" style="text-transform: none">Pre-rendering the <code>/home</code> route (2)</h3>
+            <div style="display: flex; flex-direction: column">
+                <p style="align-self: flex-start; margin: .5em 0; text-align: left" class="white">Run the script (Windows):</p>
+                <pre style="margin: 0"><code class="hljs bash" data-trim>node_modules\.bin\ts-node prerender\prerender.ts</code></pre>
+                <p style="align-self: flex-start; margin: .5em 0; text-align: left" class="white">Open the <code>prerender\prerender.html</code> in your browser</p>
+                <p style="align-self: flex-start; margin: .5em 0; text-align: left" class="white">Add a pre-render script to <code>package.json</code> for convenience:</p>
+                <pre style="margin: 0; width: 100%"><code class="hljs json" data-trim>
+                      "scripts": {
+                        "prerender": "./node_modules/.bin/ts-node ./prerender/prerender.ts"
+                      }
+                </code></pre>
+            </div>
+        </section>
+        <section data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
+            <h3 class="white" style="text-transform: none">Pre-rendering the <code>/books</code> route (1)</h3>
+            <div style="display: flex; flex-direction: column">
+                <p style="align-self: flex-start; margin: .5em 0; text-align: left" class="white">Change the url to <code>/books</code> in <code>prerender.ts</code> and run pre-rendering:</p>
+                <pre style="margin: 0"><code class="hljs bash" data-trim>npm run prerender</code></pre>
+                <p style="align-self: flex-start; margin: .5em 0; text-align: left" class="white">Open the <code>prerender\prerender.html</code> in your browser. No books have been rendered!</p>
+            </div>
+        </section>
+        <section data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
+            <h3 class="white" style="text-transform: none">Pre-rendering the <code>/books</code> route (2)</h3>
+            <div style="display: flex; flex-direction: column">
+                <p style="align-self: flex-start; margin: .5em 0; text-align: left" class="white">There are two problems: the <code>/api/book</code> endpoint is not available while pre-rendering (1) and <a href="https://github.com/angular/angular/issues/19224" target="_blank">this bug</a> (2).</p>
+                <p style="align-self: flex-start; margin: .5em 0; text-align: left" class="white">(1) can easily be solved starting the server:</p>
+                <pre style="margin: 0"><code class="hljs bash" data-trim>npm run server</code></pre>
+                <p style="align-self: flex-start; margin: .5em 0; text-align: left" class="white">A workaround for (2) is to use an absolute instead of relative URL in the BookService while pre-rendering.</p>
+            </div>
+        </section>
+        <section data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
+            <h3 class="white" style="text-transform: none">Pre-rendering the <code>/books</code> route (3)</h3>
+            <div style="display: flex; flex-direction: column">
+                <p style="align-self: flex-start; margin: .5em 0; text-align: left" class="white">We make use of the <code>isPlatformServer</code> function and the <code>PLATFORM_ID</code> token:</p>
+                <pre style="margin: 0; width: 100%"><code class="hljs ts" data-trim>
+import {Inject, Injectable, PLATFORM_ID} from '@angular/core';
+import {Observable} from 'rxjs/Observable';
+import {Book} from './book';
+import {HttpClient} from '@angular/common/http';
+import {isPlatformServer} from '@angular/common';
+
+
+@Injectable()
+export class BookService {
+  private static BOOK_URI = 'api/book';
+
+  constructor(private http: HttpClient,
+              @Inject(PLATFORM_ID) private platformId) {
+  }
+
+  findAll(): Observable&lt;Book&gt; {
+    const hostName = isPlatformServer(this.platformId) ?
+      'http://localhost:9000/' : '';
+
+    return this.http.get&lt;Book&gt;(hostName + BookService.BOOK_URI);
+  }
+}
+                </code></pre>
+            </div>
+        </section>
+        <section data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
+            <h3 class="white" style="text-transform: none">So we've reached the state</h3>
+            <h3 class="white" style="text-transform: none">on the <a href="https://github.com/devonfw-ng-adv-training/ng-universal/tree/1-prerender" target="_blank"><code>1-prerender</code></a> branch...</h3>
+        </section>
+        <section data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
+            <h3 class="white" style="text-transform: none">Server Side Rendering</h3>
+            <ul class="white">
+                <li>We'll use the existing Express (Node.js) app (<code>server/server.ts</code>) which serves the <code>/api/book</code> endpoint.</li>
+                <li>We will now pre-render a given route upon the 1st (synchronous) server call.</li>
+                <li>In <code>prerender.ts</code> we passed <code>&lt;app-root&gt;&lt;/app-root&gt;</code> to <code>renderModuleFactory()</code>. Now we'll pass the <code>index.html</code> content of the regular frontend app:
+                    <pre style="margin: .2em 0 0"><code class="hljs bash" data-trim>npm run build</code></pre></li>
+            </ul>
+        </section>
+        <section data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
+            <h3 class="white" style="text-transform: none"><code>server/server.ts</code></h3>
+            <pre style="margin: 0; width: 100%"><code class="hljs ts" data-trim>
+import 'zone.js/dist/zone-node';
+import * as express from 'express';
+import {readFileSync} from 'fs';
+import {enableProdMode} from '@angular/core';
+import {renderModuleFactory} from '@angular/platform-server';
+
+const {AppServerModuleNgFactory} = require('../dist-server/main.bundle');
+
+enableProdMode();
+
+const app = express();
+
+app.get('/api/book', (req, res) => {
+    const books = readFileSync(__dirname + '/books.json', 'utf-8').toString();
+    res.json(JSON.parse(books));
+  }
+);
+
+const indexHtml = readFileSync(__dirname + '/../dist/index.html', 'utf-8').toString();
+// serve js, css, ico, etc. files required by /../dist/index.html
+app.get('*.*', express.static(__dirname + '/../dist', {
+  maxAge: '1y'
+}));
+// pre-render the content of the requested route
+app.route('*').get((req, res) => {
+  renderModuleFactory(AppServerModuleNgFactory, {
+    document: indexHtml,
+    url: req.url
+  })
+    .then(html => {
+      res.status(200).send(html);
+    })
+    .catch(err => {
+      console.log(err);
+      res.sendStatus(500);
+    });
+});
+
+app.listen(9000, () => {
+  console.log('Server listening on port 9000!');
+});
+                </code></pre>
+        </section>
+        <section data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
+            <h3 class="white" style="text-transform: none">It looks (almost) perfect... :)</h3>
+            <div style="display: flex; flex-direction: column">
+                <img style="align-self: center" height="293" src="img/material-bug.png">
+                <p style="align-self: flex-start; margin: .2em 0; text-align: left" class="white">For details please refer to this <a href="https://github.com/angular/material2/issues/9865" target="_blank">Angular Material Github issue</a></p>
+            </div>
+        </section>
+        <section data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
+            <h3 class="white" style="text-transform: none">So we've reached the state</h3>
+            <h3 class="white" style="text-transform: none">on the <a href="https://github.com/devonfw-ng-adv-training/ng-universal/tree/2-ssr" target="_blank"><code>2-ssr</code></a> branch...</h3>
+        </section>
+        <section data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
+            <h3 class="white" style="text-transform: none">There's one problem, though...</h3>
+            <div style="display: flex; flex-direction: column">
+                <p style="align-self: flex-start; margin: .2em 0; text-align: left" class="white">The data from the <code>/api/book</code> endpoint is requested twice: while pre-rendering on the server (1) and from the browser after the app gets bootstrapped (2):</p>
+                <p style="align-self: flex-start; margin: .2em 0; text-align: left" class="white">Apart from the unnecessary server hit, this leads to bad user experience:</p>
+                <img src="img/ssr.png">
+            </div>
+        </section>
+        <section data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
+            <h3 class="white" style="text-transform: none">The State Transfer API (1)</h3>
+            <pre style="margin: 0; width: 100%"><code class="hljs ts" data-trim>
+import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
+import {BookService} from '../book.service';
+import {makeStateKey, TransferState} from '@angular/platform-browser';
+import {Book} from '../book';
+import {of as observableOf} from 'rxjs/observable/of';
+import {tap} from 'rxjs/operators';
+import {isPlatformServer} from '@angular/common';
+
+@Component({
+  selector: 'app-book-overview',
+  templateUrl: './book-overview.component.html',
+  styleUrls: ['./book-overview.component.scss']
+})
+export class BookOverviewComponent implements OnInit {
+  books$;
+
+  constructor(private book: BookService, private transferState: TransferState, @Inject(PLATFORM_ID) private platformId) {
+  }
+
+  ngOnInit() {
+    const BOOKS_KEY = makeStateKey&lt;Book[]&gt;('books');
+
+    if (this.transferState.hasKey(BOOKS_KEY)) {
+      const books = this.transferState.get&lt;Book[]&gt;(BOOKS_KEY, []);
+      this.transferState.remove(BOOKS_KEY);
+      this.books$ = observableOf(books);
+    } else {
+      this.books$ = this.book.findAll().pipe(
+        tap(books => {
+          if (isPlatformServer(this.platformId)) {
+            this.transferState.set(BOOKS_KEY, books);
+          }
+        })
+      );
+    }
+  }
+}
+                </code></pre>
+        </section>
+        <section data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
+            <h3 class="white" style="text-transform: none">The State Transfer API (2)</h3>
+            <div style="display: flex; flex-direction: column">
+                <p style="align-self: flex-start; margin: .2em 0; text-align: left" class="white">To get the code working both the client and the Universal app have to import specific modules: <code>BrowserTransferStateModule</code> and <code>ServerTransferStateModule</code> respectively.</p>
+                <p style="align-self: flex-start; margin: .2em 0; text-align: left" class="white">While rendering on the server the books' data is put for transferring to the client. It then gets this data instead of requesting the server.</p>
+            </div>
+        </section>
+        <section data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
+            <h3 class="white" style="text-transform: none">It looks better now...</h3>
+            <div style="display: flex; flex-direction: column">
+                <img src="img/ssr-with-state-transfer.png">
+            </div>
+        </section>
+        <section data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
+            <h3 class="white" style="text-transform: none">So we've reached the state</h3>
+            <h3 class="white" style="text-transform: none">on the <a href="https://github.com/devonfw-ng-adv-training/ng-universal/tree/3-state-transfer" target="_blank"><code>3-state-transfer</code></a> branch...</h3>
+        </section>
+        <section data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
+            <h3 class="white" style="text-transform: none">Making the app SEO friendly</h3>
+            <div style="display: flex; flex-direction: column">
+                <p style="align-self: flex-start; margin: .2em 0; text-align: left" class="white">We'll update the <code>&lt;title&gt;</code> and <code>&lt;meta name="description"&gt;</code> elements specifically to routes.</p>
+                <pre style="margin: 0; width: 100%"><code class="hljs ts" data-trim>
+import {Component} from '@angular/core';
+import {Meta, Title} from '@angular/platform-browser';
+
+@Component({
+  selector: 'app-home',
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.scss']
+})
+export class HomeComponent {
+  constructor(private title: Title, private meta: Meta) {
+    this.title.setTitle('Welcome to the Book App');
+    this.meta.updateTag({name: 'description',
+                    content: 'Welcome to the library'});
+  }
+}
+                </code></pre>
+            </div>
+        </section>
+        <section data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
+            <h3 class="white" style="text-transform: none">Social media crawlers</h3>
+            <div style="display: flex; flex-direction: column">
+                <p style="align-self: flex-start; margin: .2em 0; text-align: left" class="white">Social media crawlers can understand the Open Graph protocol, e.g <code>&lt;meta property="og:title" content="Books..." &gt;</code></p>
+                <p style="align-self: flex-start; margin: .2em 0; text-align: left" class="white">As in previous example we can make use of the <code>Meta</code> service to do this.</p>
+            </div>
+        </section>
+        <section data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
+            <h3 class="white" style="text-transform: none">So we've reached the state</h3>
+            <h3 class="white" style="text-transform: none">on the <a href="https://github.com/devonfw-ng-adv-training/ng-universal/tree/4-seo-friendly" target="_blank"><code>4-seo-friendly</code></a> branch...</h3>
+        </section>
+    </div>
+</div>
+
+
+<script src="../reveal.js-3.6.0/lib/js/head.min.js"></script>
+<script src="../reveal.js-3.6.0/js/reveal.js"></script>
+
+<script>
+    // More info https://github.com/hakimel/reveal.js#configuration
+    Reveal.initialize({
+        history: true,
+
+        // More info https://github.com/hakimel/reveal.js#dependencies
+        dependencies: [
+            {
+                src: '../reveal.js-3.6.0/lib/js/classList.js', condition: function() {
+                    return !document.body.classList;
+                }
+            },
+            {
+                src: '../reveal.js-3.6.0/plugin/highlight/highlight.js', async: true, callback: function() {
+                    hljs.initHighlightingOnLoad();
+                }
+            },
+            {src: '../reveal.js-3.6.0/plugin/search/search.js', async: true},
+            {src: '../reveal.js-3.6.0/plugin/zoom-js/zoom.js', async: true},
+            {src: '../reveal.js-3.6.0/plugin/notes/notes.js', async: true}
+        ]
+    });
+</script>
+</body>
+</html>
