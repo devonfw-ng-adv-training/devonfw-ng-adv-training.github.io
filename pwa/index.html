@@ -1,0 +1,369 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>Angular Advanced - Angular Universal</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+
+    <link rel="icon" href="../common/img/favicon.ico">
+
+    <link rel="stylesheet" href="../reveal.js-3.6.0/css/reveal.css">
+    <link rel="stylesheet" href="../reveal.js-3.6.0/css/theme/white.css">
+    <link rel="stylesheet" href="../common/css/common.css">
+
+    <!-- Theme used for syntax highlighting of code -->
+    <link rel="stylesheet" href="../reveal.js-3.6.0/lib/css/zenburn.css">
+
+    <!-- Printing and PDF exports -->
+    <script>
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = window.location.search.match(/print-pdf/gi) ? '../reveal.js-3.6.0/css/print/pdf.css' : '../reveal.js-3.6.0/css/print/paper.css';
+        document.getElementsByTagName('head')[0].appendChild(link);
+    </script>
+    <style>
+        .ng-universal {
+            --bg-color: var(--cap-white);
+            --link-color: var(--cap-gray);
+        }
+        code:not(.hljs) {
+            color: var(--cap-gray);
+        }
+    </style>
+</head>
+<body class="ng-universal">
+<div class="devon reveal">
+    <div class="slides">
+        <section>
+            <h3>Progressive Web Apps</h3>
+            <h4>Mai 2018 State</h4>
+            <img height="200em" class="no-background no-border no-margin no-shadow" src="../common/img/pwa-logo.png">
+        </section>
+        <section data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
+            <h3 class="white">Progressive Web Apps (PWAs)</h3>
+            <div style="display: flex; flex-direction: column">
+                <p style="align-self: flex-start; margin: .2em 0; text-align: left" class="white">PWAs are regular web applications which
+                    make extensive use of new browser APIs. These APIs make PWAs:</p>
+                <ul style="align-self: center" class="white">
+                    <li>installable</li>
+                    <li>load in full screen mode</li>
+                    <li>load fast</li>
+                    <li>work offline</li>
+                    <li>push notifications</li>
+                </ul>
+                <p style="align-self: flex-start; margin: .2em 0; text-align: left" class="white">Users have the impression they use a native app.</p>
+            </div>
+        </section>
+        <section data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
+            <h3 class="white">Let's start</h3>
+            <ol class="white">
+                <li>Install prerequisites as described <a href="https://github.com/devonfw-ng-adv-training/ng-universal/tree/0-start#install-prerequisites" target="_blank">here</a></li>
+                <li>Start a sample app as described <a href="https://github.com/devonfw-ng-adv-training/ng-universal/tree/0-start#clone-install-dependencies-and-run" target="_blank">here</a></li>
+                <li>
+                    <div style="display: flex; flex-direction: column">
+                        <div><code>npm start</code> does the following:</div>
+                        <img style="align-self: center" height="300em" src="../ng-universal/img/set-up.svg">
+                    </div>
+                </li>
+            </ol>
+        </section>
+        <section data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
+            <h2 class="white">Web App Manifest</h2>
+            <h3 class="white">to make the app</h3>
+            <h3 class="white">installable</h3>
+            <h3 class="white">and load in full screen mode</h3>
+        </section>
+        <section data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
+            <h3 class="white">Web App Manifest</h3>
+            <div style="display: flex; flex-direction: column">
+                <p style="align-self: flex-start; margin: .5em 0" class="white">is a <a href="https://www.w3.org/TR/appmanifest/">W3C standard</a> implemented by <a href="https://caniuse.com/#feat=web-app-manifest">most browsers</a></p>
+                <q class="white" style="text-align: left" cite="https://developer.mozilla.org/en-US/docs/Web/Manifest">
+                    (...) provides information about an application (such as name, author, icon, and description) in a JSON text file. The purpose of the manifest is to install web applications to the home screen of a device
+                </q>
+                <p style="align-self: flex-end; margin: .1em 0; text-align: right;" class="white"><a href="https://developer.mozilla.org/en-US/docs/Web/Manifest">MDN-Mozilla</a></p>
+            </div>
+        </section>
+        <section  data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
+            <div style="display: flex; flex-direction: column">
+                <p style="align-self: flex-start; margin: .2em 0" class="white"><code>manifest.json</code></p>
+                <pre style="margin: 0; width: 100%"><code class="hljs json" data-trim>
+{
+  "name": "Book Application",
+  "short_name": "BookApp",
+  "start_url": "/",
+  "icons": [
+    {
+      "src": "android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#ffffff",
+  "background_color": "#ffffff",
+  "display": "standalone"
+}
+                </code></pre>
+                <p style="align-self: flex-start; margin: .2em 0" class="white"><code>index.html</code></p>
+                <pre style="margin: 0"><code class="hljs html" data-trim>&lt;link rel="manifest" href="assets/manifest/manifest.json"&gt;</code></pre>
+            </div>
+        </section>
+        <section data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
+            <h3 class="white">Web App Manifest Generators</h3>
+            <div style="display: flex; flex-direction: column">
+                <p style="align-self: flex-start; margin: .5em 0" class="white">Preparing all assets needed by the Web App Manifest may be time consuming, so let's use one of available online generators: <a href="https://realfavicongenerator.net/" target="_blank">https://realfavicongenerator.net/</a></p>
+                <p style="align-self: flex-start; margin: .5em 0" class="white">As a base picture use <code>assets/capgemini-spade.svg</code></p>
+            </div>
+        </section>
+        <section data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
+            <h3 class="white">Chrome Dev Tools</h3>
+            <div style="display: flex; flex-direction: column">
+                <img src="img/manifest-chrome-tools.png">
+            </div>
+        </section>
+        <section data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
+            <h3 class="white" style="text-transform: none">So we've reached the state</h3>
+            <h3 class="white" style="text-transform: none">on the <a href="https://github.com/devonfw-ng-adv-training/pwa/tree/1-manifest" target="_blank"><code>1-manifest</code></a> branch...</h3>
+        </section>
+        <section data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
+            <h2 class="white">App Shell</h2>
+            <h3 class="white">to make the app fast :)</h3>
+        </section>
+        <section data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
+            <div style="display: flex; flex-direction: column">
+                <p style="align-self: flex-start; margin: 0" class="white">What is an App Shell?</p>
+                <q class="white" style="text-align: left; margin: .2em 0 0 .5em;" cite="https://developers.google.com/web/updates/2015/11/app-shell">
+                    An application shell is the minimal HTML, CSS, and JavaScript powering a user interface
+                </q>
+                <p style="align-self: flex-start; margin: .5em 0 0" class="white">How to build an App Shell into our app?</p>
+                <p style="align-self: flex-start; margin: .2em 0 0 .5em; text-align: left" class="white">We'll make use of <a href="https://universal.angular.io/" target="_blank">Angular&nbsp;Universal</a> and <a href="https://cli.angular.io/" target="_blank">Angular&nbsp;CLI</a></p>
+                <p style="align-self: flex-start; margin: .5em 0 0; text-align: left" class="white">What does an App Shell have to do with <a href="https://universal.angular.io/" target="_blank">Angular&nbsp;Universal</a>?</p>
+                <p style="align-self: flex-start; margin: .2em 0 0 .5em; text-align: left" class="white">We are going to pre-render the <code>AppComponent</code> at build time using <a href="https://universal.angular.io/" target="_blank">Angular&nbsp;Universal</a></p>
+            </div>
+        </section>
+        <section  data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
+            <div style="display: flex; flex-direction: column">
+                <p style="align-self: flex-start; margin: 0 0 .2em; text-align: left" class="white">Let's add an Universal bundle to our app:</p>
+                <pre style="margin: 0"><code class="hljs bash" data-trim>ng generate universal ssr-app</code></pre>
+                <pre style="margin: .2em 0 0"><code class="hljs bash" data-trim>npm install</code></pre>
+                <p style="align-self: flex-start; margin: .5em 0 .2em; text-align: left" class="white">Let's make use of the Angular CLI's App Shell generator:</p>
+                <pre style="margin: 0"><code class="hljs bash" data-trim>ng generate app-shell book-app-shell
+                    --universal-app=ssr-app --route=app-shell</code></pre>
+                <p style="align-self: flex-start; margin: .2em 0; text-align: left; font-size: smaller" class="white">Because of <a href="https://github.com/angular/devkit/issues/297">this bug</a> comment out the <code>RouterModule</code> and its import from the <code>app.module.ts</code> before.</p>
+            </div>
+        </section>
+        <section  data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
+            <div style="display: flex; justify-content: center; align-items: center" class="white">
+                <p>What&nbsp;does&nbsp;&nbsp;</p>
+                <pre style="margin: 0; width: auto"><code class="hljs bash" data-trim>ng generate app-shell</code></pre>
+                <p>&nbsp;&nbsp;do?</p>
+            </div>
+            <ul class="white">
+                <li>adds a new component called <code>AppShellComponent</code></li>
+                <li>adds the <code>/app-shell</code> route linked to the <code>AppShellComponent</code></li>
+                <li>adds both the <code>AppShellComponent</code> and the <code>/app-shell</code> route only to the Universal bundle (<code>AppServerModule</code>)</li>
+                <li>adds the <code>appShell</code> section to <code>angular-cli.json</code></li>
+            </ul>
+        </section>
+        <section  data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
+            <div style="display: flex; justify-content: center; align-items: center" class="white">
+                <p>Now executing&nbsp;</p>
+                <pre style="margin: 0; width: auto"><code class="hljs bash" data-trim>ng build --prod</code></pre>
+                <p>&nbsp;:</p>
+            </div>
+            <ul class="white">
+                <li>pre-renders the <code>/app-shell</code> route</li>
+                <li>takes the HTML output and </li>
+                <li>adds it to <code>dist/index.html</code></li>
+            </ul>
+        </section>
+        <section  data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
+            <p style="margin: 0 0 .2em" class="white"><code>AppShellComponent</code> may (and should) be changed</p>
+            <p style="margin: .2em 0; text-align: left; font-size: medium" class="white"><code>app-shell.component.html</code> (<code>&lt;div&gt;</code> is added and its height is set because of <a href="https://github.com/angular/material2/issues/5698" target="_blank">this bug</a>)</p>
+            <pre style="margin: 0; width: 100%"><code class="hljs html" data-trim>
+&lt;div class="container"&gt;
+  &lt;mat-spinner color="accent" [diameter]="140"&gt;&lt;/mat-spinner&gt;
+&lt;/div&gt;
+                </code></pre>
+            <p style="margin: .2em 0; text-align: left; font-size: medium" class="white"><code>app-shell.component.scss</code></p>
+            <pre style="margin: 0; width: 100%"><code class="hljs css" data-trim>
+div.container {
+  height: 160px;
+  mat-spinner {
+    margin: 0 auto;
+  }
+}
+                </code></pre>
+            <p style="margin: .2em 0; text-align: left; font-size: medium" class="white"><code>app.server.module.ts</code></p>
+            <pre style="margin: 0; width: 100%"><code class="hljs ts" data-trim data-noescape>
+@NgModule({
+  imports: [... <mark>MatProgressSpinnerModule</mark>]
+})
+export class AppServerModule {}
+                </code></pre>
+        </section>
+        <section  data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
+            <p style="margin: 0 0 .2em" class="white">We'll add a convenience script for starting the server in production mode</p>
+            <pre style="margin: .2em 0 0"><code class="hljs bash" data-trim>npm install express-history-api-fallback --save-dev</code></pre>
+            <p style="margin: .2em 0; text-align: left; font-size: medium" class="white"><code>server/server.ts</code></p>
+            <pre style="margin: 0; width: 100%"><code class="hljs ts" data-trim>
+const fallback = require('express-history-api-fallback');
+
+const root = `${__dirname}/../dist`;
+app.use(express.static(root));
+app.use(fallback('index.html', {root}));
+                </code></pre>
+            <p style="margin: .2em 0; text-align: left; font-size: medium" class="white"><code>package.json</code></p>
+            <pre style="margin: 0; width: 100%"><code class="hljs json" data-trim>
+  "scripts": {
+    "server:prod": "./node_modules/.bin/npm-run-all --parallel server build"
+  }
+                </code></pre>
+        </section>
+        <section  data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
+            <p style="margin: 0 0 .2em" class="white">App Shell in action</p>
+            <img src="img/app-shell.png">
+        </section>
+        <section data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
+            <h3 class="white" style="text-transform: none">So we've reached the state</h3>
+            <h3 class="white" style="text-transform: none">on the <a href="https://github.com/devonfw-ng-adv-training/pwa/tree/2-app-shell" target="_blank"><code>2-app-shell</code></a> branch...</h3>
+        </section>
+        <section data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
+            <h2 class="white">Service Worker</h2>
+            <h3 class="white">to make the app work offline</h3>
+        </section>
+        <section data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
+            <p style="margin: 0 0 .2em" class="white">Add Service Worker to the app (1)</p>
+            <pre style="margin: .2em 0 0"><code class="hljs bash" data-trim>npm install @angular/service-worker</code></pre>
+            <p style="margin: .2em 0; text-align: left; font-size: medium" class="white"><code>app.module.ts</code></p>
+            <pre style="margin: 0; width: 100%"><code class="hljs ts" data-trim data-noescape>
+import {ServiceWorkerModule} from '@angular/service-worker';
+
+@NgModule(
+  imports: [
+    <mark>ServiceWorkerModule.register('/ngsw-worker.js',
+        {enabled: environment.production})</mark>]
+})
+export class AppModule {}
+                </code></pre>
+            <p style="margin: .2em 0; text-align: left; font-size: medium" class="white"><code>angular-cli.json</code></p>
+            <pre style="margin: 0; width: 100%"><code class="hljs json" data-trim>
+"apps": [
+    {
+      "serviceWorker": true
+    }
+]
+                </code></pre>
+        </section>
+        <section data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
+            <p style="margin: 0 0 .2em" class="white">Add Service Worker to the app (2)</p>
+            <p style="margin: .2em 0; text-align: left; font-size: medium" class="white"><code>src/ngsw-config.json</code></p>
+            <pre style="margin: 0; width: 100%"><code class="hljs ts" data-trim data-noescape>
+{
+  "index": "/index.html",
+  "assetGroups": [
+    {
+      "name": "app",
+      "installMode": "prefetch",
+      "resources": {
+        "files": [
+          "/assets/manifest/favicon.ico",
+          "/index.html"
+        ],
+        "versionedFiles": [
+          "/*.bundle.css",
+          "/*.bundle.js",
+          "/*.chunk.js"
+        ]
+      }
+    },
+    {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "resources": {
+        "files": [
+          "/assets/**"
+        ]
+      }
+    },
+    {
+      "name": "fonts",
+      "resources": {
+        "urls": [
+          "https://fonts.googleapis.com/**",
+          "https://fonts.gstatic.com/**",
+          "http://covers.openlibrary.org/**"
+        ]
+      }
+    }
+  ],
+  "dataGroups": [
+    {
+      "name": "api-freshness",
+      "urls": [
+        "/api/book"
+      ],
+      "cacheConfig": {
+        "strategy": "freshness",
+        "maxSize": 100,
+        "maxAge": "3d",
+        "timeout": "10s"
+      }
+    }
+  ]
+}
+                </code></pre>
+            <p style="margin: .2em 0; text-align: left" class="white"><code>For details on configuration please refer to <a href="https://angular.io/guide/service-worker-config" target="_blank">Angular Guide</a></code></p>
+        </section>
+        <section  data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
+            <div style="display: flex; justify-content: center; align-items: center" class="white">
+                <p>Now executing&nbsp;</p>
+                <pre style="margin: 0; width: auto"><code class="hljs bash" data-trim>ng build --prod</code></pre>
+                <p>&nbsp;adds:</p>
+            </div>
+            <ul class="white">
+                <li><code>/dist/ngsw-worker.js</code> which is in fact the Service Worker</li>
+                <li>and its runtime configuration <code>/dist/ngsw.json</code> used to check which files should be cached, which expired, etc.</li>
+            </ul>
+        </section>
+    </div>
+</div>
+
+
+<script src="../reveal.js-3.6.0/lib/js/head.min.js"></script>
+<script src="../reveal.js-3.6.0/js/reveal.js"></script>
+
+<script>
+    // More info https://github.com/hakimel/reveal.js#configuration
+    Reveal.initialize({
+        history: true,
+
+        // More info https://github.com/hakimel/reveal.js#dependencies
+        dependencies: [
+            {
+                src: '../reveal.js-3.6.0/lib/js/classList.js', condition: function() {
+                    return !document.body.classList;
+                }
+            },
+            {
+                src: '../reveal.js-3.6.0/plugin/highlight/highlight.js', async: true, callback: function() {
+                    hljs.initHighlightingOnLoad();
+                }
+            },
+            {src: '../reveal.js-3.6.0/plugin/search/search.js', async: true},
+            {src: '../reveal.js-3.6.0/plugin/zoom-js/zoom.js', async: true},
+            {src: '../reveal.js-3.6.0/plugin/notes/notes.js', async: true}
+        ]
+    });
+</script>
+</body>
+</html>
