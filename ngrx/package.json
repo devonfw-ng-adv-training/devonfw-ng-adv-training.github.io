@@ -1,0 +1,18 @@
+{
+  "name": "NGRX",
+  "version": "0.0.1",
+  "license": "",
+  "angular-cli": {},
+  "scripts": {
+    "start": "node node_modules/http-server/bin/http-server -p4200",
+    "watch": "node node_modules/reload/bin/reload -b -p 4200",
+    "pug": "node_modules/.bin/pug index.pug -P"
+  },
+  "private": true,
+  "devDependencies": {
+    "http-server": "^0.9.0",
+    "pug-cli": "^1.0.0-alpha6",
+    "reload": "^1.1.2"
+  },
+  "dependencies": {}
+}

@@ -1,0 +1,87 @@
+doctype html 
+html
+  head
+    title Introduction 
+    meta(charset='utf-8')
+    meta(name='author', content=' ')
+    meta(name='description', content='Redux 101')
+    meta(name="viewport",content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui")
+    link(rel="icon" href="../common/img/favicon.ico")
+    link(href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet")
+  
+    link(rel="stylesheet" href="../reveal.js-3.6.0/css/reveal.css")
+    link(rel="stylesheet" href="../reveal.js-3.6.0/css/theme/white.css")
+    link(rel="stylesheet" href="../common/css/common.css")
+    link(rel="stylesheet" href="custom.css")
+
+
+    <!-- Theme used for syntax highlighting of code -->
+    link(rel="stylesheet" href="../reveal.js-3.6.0/lib/css/zenburn.css")
+
+    <!-- Printing and PDF exports -->
+    script.     
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = window.location.search.match(/print-pdf/gi) ? '../reveal.js-3.6.0/css/print/pdf.css' : '../reveal.js-3.6.0/css/print/paper.css';
+        document.getElementsByTagName('head')[0].appendChild(link);
+  
+    style.
+        section.agenda ul {
+            list-style: none
+            margin: 0
+            color: var(--cap-white)
+        }    
+   
+ 
+-var counter = 0
+  body
+    .reveal
+      .slides        
+        include ./slides/title.pug
+        include ./slides/agenda.pug  
+        include ./slides/applicationstate.pug  
+        include ./slides/redux.pug  
+        include ./slides/principles.pug
+        include ./slides/schema.pug   
+        include ./slides/demo.pug   
+        include ./slides/exercise.pug
+        include ./slides/effects.pug
+        include ./slides/questions.pug     
+        include ./slides/learn-more.pug  
+        
+
+     
+    script(src='../reveal.js-3.6.0/lib/js/head.min.js')
+    script(src='../reveal.js-3.6.0/js/reveal.js')
+
+    script.
+      Reveal.initialize({
+       // controls: true,
+      //  progress: true,
+        history: true,
+      //  center: true,
+      //  rollingLinks: true,
+     //   transition: "convex",
+        //- width: "90%",
+        //- height: 1.0,
+        dependencies: [
+          // Syntax highlight for <code> elements
+           {
+                src: '../reveal.js-3.6.0/lib/js/classList.js', condition: function() {
+                    return !document.body.classList;
+                }
+            },
+            {
+                src: '../reveal.js-3.6.0/plugin/highlight/highlight.js', async: true, callback: function() {
+                    hljs.initHighlightingOnLoad();
+                }
+            },
+            {src: '../reveal.js-3.6.0/plugin/search/search.js', async: true},
+            {src: '../reveal.js-3.6.0/plugin/zoom-js/zoom.js', async: true},
+            {src: '../reveal.js-3.6.0/plugin/notes/notes.js', async: true}      
+        ]
+      });
+     
+
+ 

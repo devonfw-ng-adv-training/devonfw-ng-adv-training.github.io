@@ -1,0 +1,11 @@
+-var transition= "slide"
+-var bgImg ="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg"
+block vars
+
+
+- var pageId = title+ "-"+  counter++ 
+section(id= pageId, data-transition=transition data-background-image=bgImg)
+  h2.white
+    block title
+  body.white
+    block content  
