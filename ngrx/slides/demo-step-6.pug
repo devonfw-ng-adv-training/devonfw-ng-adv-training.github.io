@@ -1,0 +1,14 @@
+extends layout.pug 
+
+block vars
+  - var title = 'demo-step-6'
+  - var bgImg ='../common/img/shapes/Fixed_Shape_2_SVG/Fixed_Shape_2_CapgeminiBlue_RGB.svg'
+
+block title
+        | Step 6
+block content
+      ul
+        li Install @ngrx/router-store package
+        li Register route reducer and serializer
+        li Show some info when books are loading
+        li Tweak existing effect so that it starts loading books both on ROUTER_NAVIGATION and on LOAD_BOOKS actions 

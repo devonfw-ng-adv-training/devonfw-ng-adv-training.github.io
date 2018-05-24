@@ -1,0 +1,14 @@
+extends layout.pug 
+
+block vars
+  - var title = 'demo-step-5'
+ 
+block title
+        | Step 5
+block content
+      ul
+        li Remove unused methods from ShelfService
+        li Add ShelfService.fetchBooks method that will return books with some delay, to emulate the HTTP request behaviour
+        li Be sure that ShelfService returns other titles than in the default state
+        li Install @ngrx/effects package
+        

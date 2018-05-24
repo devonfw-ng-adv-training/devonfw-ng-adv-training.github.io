@@ -1,0 +1,17 @@
+extends layout.pug 
+
+block vars
+  - var title = 'demo-step-4'
+  - var bgImg ='../common/img/shapes/Fixed_Shape_2_SVG/Fixed_Shape_2_CapgeminiBlue_RGB.svg'
+
+block title
+        | Step 4
+block content
+      ul
+        li Handle updating book in the reducer:
+          ul
+            li Notice that there's no invariant property, so introduce id
+            li Assign unique id to a NgrxBook, use uuid package
+            li Handle an update action that carries an id
+        li Test the reducer
+        li Dispatch the update action on book move (BookShelfComponent)

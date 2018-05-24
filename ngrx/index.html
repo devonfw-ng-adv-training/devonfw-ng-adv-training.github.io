@@ -105,25 +105,118 @@
         <h2 class="white">General Redux Schema</h2>
         <body class="white"><img src="img/schema.png"/></body>
       </section>
-      <section id="demo-6" data-transition="slide" data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
+      <section id="simple-example-6" data-transition="slide" data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
+        <h2 class="white">Simple Example</h2>
+        <body class="white"><a href="https://codepen.io/anon/pen/MGMWPQ" target="_blank">Codepen           </a></body>
+      </section>
+      <section id="demo-7" data-transition="slide" data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
         <h2 class="white">Live Coding Session</h2>
         <body class="white"></body>
       </section>
-      <section id="excercise-7" data-transition="slide" data-background-image="../common/img/shapes/Fixed_Shape_2_SVG/Fixed_Shape_2_CapgeminiBlue_RGB.svg">
-        <h2 class="white">Excercise</h2>
-        <body class="white"></body>
+      <section id="demo-step-1-8" data-transition="slide" data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
+        <h2 class="white">Step 1</h2>
+        <body class="white">
+          <ul>
+            <li>Install @ngrx/store package</li>
+            <li>Write your first reducer, hint: (State, Action) => State</li>
+            <li>Write your first reducer, hint: (State, Action) => State</li>
+            <li>Wire up the reducer with the module using StoreModule.forRoot method and ActionReducerMap</li>
+          </ul>
+        </body>
       </section>
-      <section id="effects-8" data-transition="slide" data-background-image="../common/img/shapes/Fixed_Shape_2_SVG/Fixed_Shape_2_CapgeminiBlue_RGB.svg">
+      <section id="demo-step-2-9" data-transition="slide" data-background-image="../common/img/shapes/Fixed_Shape_2_SVG/Fixed_Shape_2_CapgeminiBlue_RGB.svg">
+        <h2 class="white">Step 2</h2>
+        <body class="white">
+          <ul>
+            <li>Inject Store<NgrxModuleState> to component, get books with select operator</li>
+            <li>Use the store to render books in BooksShelf:
+              <ul></ul>
+              <li>Select all book items,</li>
+              <li>Assign them to existing books: NgRxBook[] (temporarily)</li>
+              <li>Map book collection to a filtered one, based on this.mode</li>
+            </li>
+          </ul>
+        </body>
+      </section>
+      <section id="demo-step-3-10" data-transition="slide" data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
+        <h2 class="white">Step 3</h2>
+        <body class="white">
+          <ul>
+            <li>Refactor BooksShelfComponent to use | async</li>
+            <li>Extract books selection logic to store/selectors.ts, use createSelector function,</li>
+            <li>Write a unit test for your reducer        </li>
+          </ul>
+        </body>
+      </section>
+      <section id="demo-step-4-11" data-transition="slide" data-background-image="../common/img/shapes/Fixed_Shape_2_SVG/Fixed_Shape_2_CapgeminiBlue_RGB.svg">
+        <h2 class="white">Step 4</h2>
+        <body class="white">
+          <ul>
+            <li>Handle updating book in the reducer:
+              <ul>
+                <li>Notice that there's no invariant property, so introduce id</li>
+                <li>Assign unique id to a NgrxBook, use uuid package</li>
+                <li>Handle an update action that carries an id</li>
+              </ul>
+            </li>
+            <li>Test the reducer</li>
+            <li>Dispatch the update action on book move (BookShelfComponent)</li>
+          </ul>
+        </body>
+      </section>
+      <section id="effects-12" data-transition="slide" data-background-image="../common/img/shapes/Fixed_Shape_2_SVG/Fixed_Shape_2_CapgeminiBlue_RGB.svg">
         <h2 class="white">Redux Schema With Effects</h2>
         <body class="white"><img src="img/schema-effects.png"/></body>
       </section>
-      <section id="questions-9" data-transition="slide" data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
-        <h2 class="white">Q&amp;A</h2>
-        <body class="white"></body>
+      <section id="demo-step-5-13" data-transition="slide" data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
+        <h2 class="white">Step 5</h2>
+        <body class="white">
+          <ul>
+            <li>Remove unused methods from ShelfService</li>
+            <li>Add ShelfService.fetchBooks method that will return books with some delay, to emulate the HTTP request behaviour</li>
+            <li>Be sure that ShelfService returns other titles than in the default state</li>
+            <li>Install @ngrx/effects package</li>
+          </ul>
+        </body>
       </section>
-      <section id="learn-more-10" data-transition="slide" data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
+      <section id="demo-step-5.2-14" data-transition="slide" data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
+        <h2 class="white">Step 5</h2>
+        <body class="white">
+          <ul>
+            <li>Add LoadBooks and BooksLoaded actions, handle them in the reducer</li>
+            <li>Write an effect that reloads books on LoadBooks action and emits BooksLoaded action</li>
+            <li>Register the effect with EffectsModule.forRoot</li>
+            <li>Add a button that will dispatch LoadBooks action</li>
+          </ul>
+        </body>
+      </section>
+      <section id="demo-step-6-15" data-transition="slide" data-background-image="../common/img/shapes/Fixed_Shape_2_SVG/Fixed_Shape_2_CapgeminiBlue_RGB.svg">
+        <h2 class="white">Step 6</h2>
+        <body class="white">
+          <ul>
+            <li>Install @ngrx/router-store package</li>
+            <li>Register route reducer and serializer</li>
+            <li>Show some info when books are loading</li>
+            <li>Tweak existing effect so that it starts loading books both on ROUTER_NAVIGATION and on LOAD_BOOKS actions </li>
+          </ul>
+        </body>
+      </section>
+      <section id="excercise-16" data-transition="slide" data-background-image="../common/img/shapes/Fixed_Shape_2_SVG/Fixed_Shape_2_CapgeminiBlue_RGB.svg">
+        <h2 class="white">Excercise</h2>
+        <body class="white">
+          <p>Please implement logic for adding new book</p>
+        </body>
+      </section>
+      <section id="learn-more-17" data-transition="slide" data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
         <h2 class="white">Learn more</h2>
-        <body class="white"></body>
+        <body class="white">
+          <ul>
+            <li> <a href="https://redux.js.org/" target="_blank">redux.js.org</a></li>
+            <li> <a href="https://ultimateangular.com/" target="_blank">NGRX State Management - ultimateangular.com</a></li>
+            <li> <a href="https://egghead.io/courses/getting-started-with-redux" target="_blank">Getting Started with Redux</a></li>
+            <li> <a href="https://www.youtube.com/watch?v=6Z-1v1UnoM8" target="_blank">Todd Motto - Understand NGRX by building a Store - Keynote</a></li>
+          </ul>
+        </body>
       </section>
     </div>
   </div>

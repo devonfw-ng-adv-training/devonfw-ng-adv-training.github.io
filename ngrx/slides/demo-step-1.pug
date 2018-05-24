@@ -1,0 +1,14 @@
+extends layout.pug 
+
+block vars
+  - var title = 'demo-step-1'
+   
+
+block title
+        | Step 1
+block content
+      ul
+        li Install @ngrx/store package
+        li Write your first reducer, hint: (State, Action) => State
+        li Write your first reducer, hint: (State, Action) => State
+        li Wire up the reducer with the module using StoreModule.forRoot method and ActionReducerMap

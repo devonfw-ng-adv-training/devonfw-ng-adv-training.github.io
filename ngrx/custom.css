@@ -2,8 +2,7 @@
   
   
   .reveal, .reveal  h2 .title  {
-      color: white;
-      text-transform: capitalize;
+      color: white;      
   }
   
   .reveal ul.no-bullet {

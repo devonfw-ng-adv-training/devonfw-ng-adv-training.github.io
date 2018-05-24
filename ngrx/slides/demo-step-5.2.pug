@@ -1,0 +1,13 @@
+extends layout.pug 
+
+block vars
+  - var title = 'demo-step-5.2'
+ 
+block title
+        | Step 5
+block content
+      ul
+        li Add LoadBooks and BooksLoaded actions, handle them in the reducer
+        li Write an effect that reloads books on LoadBooks action and emits BooksLoaded action
+        li Register the effect with EffectsModule.forRoot
+        li Add a button that will dispatch LoadBooks action

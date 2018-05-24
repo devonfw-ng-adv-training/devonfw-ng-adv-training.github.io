@@ -1,0 +1,16 @@
+extends layout.pug 
+
+block vars
+  - var title = 'demo-step-2'
+  - var bgImg ='../common/img/shapes/Fixed_Shape_2_SVG/Fixed_Shape_2_CapgeminiBlue_RGB.svg'
+
+block title
+        | Step 2
+block content
+      ul
+        li Inject Store<NgrxModuleState> to component, get books with select operator
+        li Use the store to render books in BooksShelf:
+           ul
+           li Select all book items,
+           li Assign them to existing books: NgRxBook[] (temporarily)
+           li Map book collection to a filtered one, based on this.mode
