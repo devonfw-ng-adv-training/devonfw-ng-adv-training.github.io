@@ -53,7 +53,7 @@
                     <li>load in full screen mode</li>
                     <li>load fast</li>
                     <li>work offline</li>
-                    <li>push notifications</li>
+                    <li>receive push notifications</li>
                 </ul>
                 <p style="align-self: flex-start; margin: .2em 0; text-align: left" class="white">Users have the impression they use a native app.</p>
             </div>
@@ -334,6 +334,120 @@ export class AppModule {}
                 <li><code>/dist/ngsw-worker.js</code> which is in fact the Service Worker</li>
                 <li>and its runtime configuration <code>/dist/ngsw.json</code> used to check which files should be cached, which expired, etc.</li>
             </ul>
+        </section>
+        <section  data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
+            <p style="margin: 0 0 .2em" class="white">Service Worker in action</p>
+            <img src="img/sw.png">
+        </section>
+        <section data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
+            <h3 class="white" style="text-transform: none">So we've reached the state</h3>
+            <h3 class="white" style="text-transform: none">on the <a href="https://github.com/devonfw-ng-adv-training/pwa/tree/3-service-worker" target="_blank"><code>3-service-worker</code></a> branch...</h3>
+        </section>
+        <section data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
+            <h2 class="white">Push Notifications</h2>
+            <h3 class="white">to engage app users</h3>
+            <h3 class="white">(excluding&nbsp;<img style="height: 1em; fill: white" src="../common/img/Apple_logo_white.svg" class="no-background no-border no-margin no-shadow">&nbsp;ones)</h3>
+        </section>
+        <section data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
+            <div style="display: flex; flex-direction: column">
+                <p style="align-self: flex-start; margin: .5em 0; text-align: left" class="white">Web Push Notifications are in fact based on two browser standards:</p>
+                <ul class="white">
+                    <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Push_API" target="_blank">Push API</a> allows messages to be pushed from a server to a browser (even when the site isn't focused or the browser is closed)</li>
+                    <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Notifications_API" target="_blank">Notifications API</a> displays native system notifications to the user</li>
+                </ul>
+                <p style="align-self: flex-start; margin: .5em 0; text-align: left" class="white">We can't push notifications from <strong>our server</strong> directly. Instead, a Push Service <strong>specific to a browser</strong> is to be used.</p>
+                <p style="margin: 0; font-size: medium" class="white"><a href="https://developers.google.com/web/fundamentals/push-notifications/" target="_blank">https://developers.google.com/web/fundamentals/push-notifications/</a></p>
+            </div>
+        </section>
+        <section>
+            <h3>Step 1: Client Side</h3>
+            <img src="img/browser-to-server.svg" class="no-shadow">
+        </section>
+        <section>
+            <h3>Step 2: Send a Push Message</h3>
+            <img src="img/server-to-push-service.svg" class="no-shadow">
+        </section>
+        <section>
+            <h3>Step 3: Push Event on the User's Device</h3>
+            <img src="img/push-service-to-sw-event.svg" class="no-shadow">
+        </section>
+        <section data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
+            <h3 class="white">We need to uniquely identify our server to Push Services.</h3>
+            <p style="margin: 0 0 .2em; text-align: left" class="white">Therefore we are going to generate a VAPID (Voluntary Application Server Identification) key pair for that.</p>
+            <p style="margin: 0 0 .2em; text-align: left" class="white">We make use of the <a href="https://github.com/web-push-libs/web-push" target="_blank">web-push</a> library:</p>
+            <pre style="margin: .2em 0 0"><code class="hljs bash" data-trim>npm install web-push</code></pre>
+            <p style="margin: 0 0 .2em; text-align: left" class="white">Generating VAPID keys for our server:</p>
+            <pre style="margin: .2em 0 0"><code class="hljs bash" data-trim> node_modules\.bin\web-push generate-vapid-keys --json</code></pre>
+        </section>
+        <section data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
+            <p style="margin: 0 0 .2em" class="white">Subscribing to Push Notifications</p>
+            <p style="margin: .2em 0; text-align: left; font-size: medium" class="white"><code>sw-push-sub-btn.component.ts</code></p>
+            <pre style="margin: 0; width: 100%"><code class="hljs ts" data-trim data-noescape>
+import {SwPush} from '@angular/service-worker';
+
+@Component(...)
+export class SwPushSubBtnComponent {
+  private readonly VAPID_PUBLIC_KEY = 'BK8...';
+
+  constructor(private swPush: SwPush) {}
+
+  subscribe() {
+    <mark>this.swPush.requestSubscription({</mark>
+      serverPublicKey: this.VAPID_PUBLIC_KEY
+    })
+      .then(subscription => {
+        // send the subscription to our server
+      })
+      .catch(err => {
+        console.error('swPush.requestSubscription() failed', err);
+      });
+  }
+}
+                </code></pre>
+        </section>
+        <section data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
+            <p style="margin: 0 0 .2em" class="white">Send a Push Message</p>
+            <p style="margin: .2em 0; text-align: left; font-size: medium" class="white"><code>server.ts</code></p>
+            <pre style="margin: 0; width: 100%"><code class="hljs ts" data-trim data-noescape>
+import * as webPush from 'web-push';
+
+const vapidKeys = {
+  publicKey: 'BK8...',
+  privateKey: '77ne...'
+};
+
+webPush.setVapidDetails(
+  'https://github.com/devonfw-ng-adv-training',
+  vapidKeys.publicKey,
+  vapidKeys.privateKey
+);
+
+app.post('/api/message', (req, res) => {
+    Promise.all(subscriptions.map(sub => <mark>webPush.sendNotification</mark>(
+      sub, JSON.stringify({
+        notification: {
+          title: 'Hello PWA User!',
+          body: 'This is a Push Notification!',
+          icon: 'assets/manifest/android-chrome-192x192.png',
+          vibrate: [100, 50, 100],
+          data: {
+            dateOfArrival: Date.now(),
+            primaryKey: 1
+          }
+        }
+      }))))
+      .then(() => res.sendStatus(200))
+      .catch(err => {
+        console.error('Error sending notification, reason: ', err);
+        res.sendStatus(500);
+      });
+  }
+);
+                </code></pre>
+        </section>
+        <section  data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
+            <p style="margin: 0 0 .2em" class="white">Push Notifications in action</p>
+            <img src="img/push-message.png">
         </section>
     </div>
 </div>
