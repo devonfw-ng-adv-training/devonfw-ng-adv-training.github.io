@@ -241,6 +241,14 @@ app.use(fallback('index.html', {root}));
             <h3 class="white">to make the app work offline</h3>
         </section>
         <section data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
+            <div style="display: flex; flex-direction: column">
+                <p style="align-self: flex-start; margin: .5em 0; text-align: left" class="white">
+                    A <strong>service worker</strong> is a type of web worker. It's essentially a JavaScript file that runs <strong>separately from the main browser thread</strong>, intercepting network requests, caching or retrieving resources from the cache, and delivering push messages.
+                </p>
+                <p style="margin: 0; font-size: medium" class="white"><a href="https://developers.google.com/web/ilt/pwa/introduction-to-service-worker" target="_blank">https://developers.google.com/web/ilt/pwa/introduction-to-service-worker</a></p>
+            </div>
+        </section>
+        <section data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
             <p style="margin: 0 0 .2em" class="white">Add Service Worker to the app (1)</p>
             <pre style="margin: .2em 0 0"><code class="hljs bash" data-trim>npm install @angular/service-worker</code></pre>
             <p style="margin: .2em 0; text-align: left; font-size: medium" class="white"><code>app.module.ts</code></p>
@@ -381,7 +389,7 @@ export class AppModule {}
         </section>
         <section data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
             <p style="margin: 0 0 .2em" class="white">Subscribing to Push Notifications</p>
-            <p style="margin: .2em 0; text-align: left; font-size: medium" class="white"><code>sw-push-sub-btn.component.ts</code></p>
+            <p style="margin: .2em 0; text-align: left; font-size: medium" class="white"><code>sw-push-sub-btn.component.ts</code> (<a href="https://raw.githubusercontent.com/devonfw-ng-adv-training/pwa/4-push-notifications/src/app/shared/sw-push-sub-btn/sw-push-sub-btn.component.ts" target="_blank">full example</a>)</p>
             <pre style="margin: 0; width: 100%"><code class="hljs ts" data-trim data-noescape>
 import {SwPush} from '@angular/service-worker';
 
@@ -407,7 +415,7 @@ export class SwPushSubBtnComponent {
         </section>
         <section data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
             <p style="margin: 0 0 .2em" class="white">Send a Push Message</p>
-            <p style="margin: .2em 0; text-align: left; font-size: medium" class="white"><code>server.ts</code></p>
+            <p style="margin: .2em 0; text-align: left; font-size: medium" class="white"><code>server.ts</code> (<a href="https://raw.githubusercontent.com/devonfw-ng-adv-training/pwa/4-push-notifications/server/server.ts" target="_blank">full example</a>)</p>
             <pre style="margin: 0; width: 100%"><code class="hljs ts" data-trim data-noescape>
 import * as webPush from 'web-push';
 
@@ -448,6 +456,10 @@ app.post('/api/message', (req, res) => {
         <section  data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
             <p style="margin: 0 0 .2em" class="white">Push Notifications in action</p>
             <img src="img/push-message.png">
+        </section>
+        <section data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
+            <h3 class="white" style="text-transform: none">So we've reached the state</h3>
+            <h3 class="white" style="text-transform: none">on the <a href="https://github.com/devonfw-ng-adv-training/pwa/tree/4-push-notifications" target="_blank"><code>4-push-notifications</code></a> branch...</h3>
         </section>
     </div>
 </div>
