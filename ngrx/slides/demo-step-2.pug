@@ -8,9 +8,10 @@ block title
         | Step 2
 block content
       ul
-        li Inject Store<NgrxModuleState> to component, get books with select operator
-        li Use the store to render books in BooksShelf:
+        li Inject Store<NgrxModuleState> to the BooksShelfComponent
+        li Use the store to render books in BooksShelfComponent:
            ul
-           li Select all book items,
-           li Assign them to existing books: NgRxBook[] (temporarily)
-           li Map book collection to a filtered one, based on this.mode
+             li Stop using the service in getData
+             li Fetch all books from the store using select operator,
+             li Temporarily subscribe to the store and assign them to the existing books field
+             li Map the book collection to a filtered one, based on this.mode (if set)

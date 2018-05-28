@@ -1,0 +1,17 @@
+extends layout.pug 
+
+block vars
+  - var title = 'demo-step-2'
+
+block title
+        | Step 7 (1 of 2)
+block content
+      ul
+        li Install @ngrx/router-store package
+        li Extend NgrxModuleState to have router key of type RouterReducerState<RouterStateUrl> - the RouterStateUrl was implemented for you in store/router-store.ts
+        li Import and register routerReducer in your present ActionReducerMap (suggested key: router)
+       
+
+
+
+

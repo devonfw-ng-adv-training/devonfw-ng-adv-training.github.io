@@ -1,0 +1,13 @@
+extends layout.pug 
+
+block vars
+  - var title = 'excercise-3'
+  - var bgImg ='../common/img/shapes/Fixed_Shape_2_SVG/Fixed_Shape_2_CapgeminiBlue_RGB.svg'
+
+block title
+        | Excercise 2
+block content
+        ul
+          li Add an Effect to your effects class, that will start fetching books when ROUTER_NAVIGATION action appears
+          li Write selectors that will help you get store.router.state.params.collection that tells which shelf is selected.
+          li Use these selectors to set mode in BooksShelfComponent.

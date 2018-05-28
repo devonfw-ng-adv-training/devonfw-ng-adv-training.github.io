@@ -1,0 +1,20 @@
+extends layout.pug 
+
+block vars
+  - var title = 'demo-step-final'
+  - var bgImg ='../common/img/shapes/Fixed_Shape_2_SVG/Fixed_Shape_2_CapgeminiBlue_RGB.svg'
+
+block title
+        | Final Step
+block content
+      ul
+        li Install jasmine-marbles
+        li Write a hot marble/observable that will emulate a stream of actions
+        li Write a cold marble/observable that will emulate the behaviour of the effect
+        li Compare them using expect(...).toBeObservable(...)
+
+
+
+
+
+

@@ -1,0 +1,14 @@
+extends layout.pug 
+
+block vars
+  - var title = 'excercise-3'
+  - var bgImg ='../common/img/shapes/Fixed_Shape_2_SVG/Fixed_Shape_2_CapgeminiBlue_RGB.svg'
+
+block title
+        | Excercise 3
+block content
+        ul 
+          li Use the effect from Ex2 to pass collection from router store to ShelfService.getData
+          li Adjust ShelfService.getData to filter out books depending on the collection (optional argument)
+          li Hide shelves in BooksShelfComponent based on the value of mode$ (collection).
+          li Remove data filtering data logic from BooksShelfComponent

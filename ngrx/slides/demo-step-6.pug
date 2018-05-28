@@ -8,7 +8,9 @@ block title
         | Step 6
 block content
       ul
-        li Install @ngrx/router-store package
-        li Register route reducer and serializer
-        li Show some info when books are loading
-        li Tweak existing effect so that it starts loading books both on ROUTER_NAVIGATION and on LOAD_BOOKS actions 
+        li Install @ngrx/store-devtools
+        li Install in your web browser the 
+           a(href="http://zalmoxisus.github.io/redux-devtools-extension/" target='_blank')
+              | Redux Devtools Extension
+        li Wire-up 
+          | StoreDevToolsModule.instrument({ maxAge: 25 }) with your module

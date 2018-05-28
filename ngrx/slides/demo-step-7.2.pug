@@ -1,0 +1,15 @@
+extends layout.pug 
+
+block vars
+  - var title = 'demo-step-7-2)'
+
+block title
+        | Step 7 (2 of 2)
+block content
+      ul
+        li Wire up StoreRouterConnectingModule.forRoot({ stateKey: 'router' }) with your module
+        li Add { provide: RouterStateSerializer, useClass: CustomSerializer } to your module providers. CustomSerializer is implemented in store/router-store.ts.
+
+
+
+
