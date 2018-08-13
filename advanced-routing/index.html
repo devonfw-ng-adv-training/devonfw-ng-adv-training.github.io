@@ -1,0 +1,78 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>Angular Advanced - Advanced Routing</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+
+    <link rel="icon" href="../common/img/favicon.ico">
+
+    <link rel="stylesheet" href="../reveal.js-3.6.0/css/reveal.css">
+    <link rel="stylesheet" href="../reveal.js-3.6.0/css/theme/white.css">
+    <link rel="stylesheet" href="../common/css/common.css">
+
+    <!-- Theme used for syntax highlighting of code -->
+    <link rel="stylesheet" href="../reveal.js-3.6.0/lib/css/zenburn.css">
+
+    <!-- Printing and PDF exports -->
+    <script>
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = window.location.search.match(/print-pdf/gi) ? '../reveal.js-3.6.0/css/print/pdf.css' : '../reveal.js-3.6.0/css/print/paper.css';
+        document.getElementsByTagName('head')[0].appendChild(link);
+    </script>
+    <style>
+        .ng-universal {
+            --bg-color: var(--cap-white);
+            --link-color: var(--cap-gray);
+        }
+        code:not(.hljs) {
+            color: var(--cap-gray);
+        }
+    </style>
+</head>
+<body class="ng-universal">
+<div class="devon reveal">
+    <div class="slides">
+        <section data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
+            <h3 class="white">Angular Advanced</h3>
+            <h4 class="white">August 2018 State</h4>
+            <img height="250em" class="no-background no-border no-margin no-shadow" src="../common/img/ng-universal-logo.svg">
+        </section>
+        
+    </div>
+</div>
+
+
+<script src="../reveal.js-3.6.0/lib/js/head.min.js"></script>
+<script src="../reveal.js-3.6.0/js/reveal.js"></script>
+
+<script>
+    // More info https://github.com/hakimel/reveal.js#configuration
+    Reveal.initialize({
+        history: true,
+
+        // More info https://github.com/hakimel/reveal.js#dependencies
+        dependencies: [
+            {
+                src: '../reveal.js-3.6.0/lib/js/classList.js', condition: function() {
+                    return !document.body.classList;
+                }
+            },
+            {
+                src: '../reveal.js-3.6.0/plugin/highlight/highlight.js', async: true, callback: function() {
+                    hljs.initHighlightingOnLoad();
+                }
+            },
+            {src: '../reveal.js-3.6.0/plugin/search/search.js', async: true},
+            {src: '../reveal.js-3.6.0/plugin/zoom-js/zoom.js', async: true},
+            {src: '../reveal.js-3.6.0/plugin/notes/notes.js', async: true}
+        ]
+    });
+</script>
+</body>
+</html>
