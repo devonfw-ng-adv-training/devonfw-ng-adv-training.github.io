@@ -42,7 +42,7 @@
   <div class="devon reveal">
     <div class="slides">
       <section data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
-        <h3 class="white">Angular Advanced</h3>
+        <h3 class="white">Advanced Routing</h3>
         <h4 class="white">August 2018 State</h4>
       </section>
 
@@ -60,6 +60,12 @@
             <li>
               <a href="#/canActivateGuard">CanActivate Guard</a>
             </li>
+            <li>
+              Lazy Loading Routes - TODO
+            </li>
+            <li>
+              child routes - TODO
+            </li>
           </ul>
         </body>
       </section>
@@ -74,7 +80,6 @@
             <li>about the routing in the Application</li>
             guard, server, service, ...?
             <li>Overall Routing Features - checklist!!!!!!111 TODO</li>
-            
           </ul>
         </body>
       </section>
@@ -97,7 +102,10 @@
           <h2 class="white">Routing Basics</h2>
 
           <body class="white">
-            TODO
+            <img src="img/routing.png" />
+            <small>
+              <a href="https://vsavkin.com/angular-2-router-d9e30599f9ea">https://vsavkin.com/angular-2-router-d9e30599f9ea</a>
+            </small>
           </body>
         </section>
 
@@ -113,7 +121,14 @@
           <h2 class="white">Step 1</h2>
 
           <body class="white">
-            TODO
+            To observe the unwanted behaviour lets add a delay to our Service.
+
+            <pre style="margin: 0; width: 100%"><code class="hljs ts" data-trim>
+              findOne(id: number): Observable&lt;Book&gt; {
+                return this.http.get&lt;Book&gt;(BookService.BOOK_URI + '/' + id)
+                  .pipe(delay(1000));
+              }
+            </code></pre> How does the app behave now?
           </body>
         </section>
 
@@ -121,7 +136,11 @@
           <h2 class="white">Step 2</h2>
 
           <body class="white">
-            TODO
+            To be sure that it is the resolve that is causing the issue lets trace it.
+
+            <pre style="margin: 0; width: 100%"><code class="hljs ts" data-trim>
+              RouterModule.forRoot(routes, { enableTracing: true }),
+            </code></pre> See the resolve now?
           </body>
         </section>
 
@@ -129,9 +148,80 @@
           <h2 class="white">Step 3</h2>
 
           <body class="white">
-            TODO
+            Lets handle the ResolveStart - ResolveEnd case and show something special
+
+            <pre style="margin: 0; width: 100%"><code class="hljs ts" data-trim>
+              export class AppComponent {
+                isLoadingData = false;
+                
+                constructor(private router: Router) {
+                  router.events.subscribe((routerEvent: Event) => {
+                    this.checkRouterEvent(routerEvent);
+                  });
+                }
+            </code></pre>
+
           </body>
         </section>
+
+        <section data-transition="slide" data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
+          <h2 class="white">Step 4</h2>
+
+          <body class="white">
+            <pre style="margin: 0; width: 100%"><code class="hljs ts" data-trim>
+              checkRouterEvent(routerEvent: Event): void {
+                if (routerEvent instanceof ResolveStart) {
+                  this.isLoadingData = true;
+                }
+                if (routerEvent instanceof ResolveEnd ||
+                    routerEvent instanceof NavigationCancel ||
+                    routerEvent instanceof NavigationError) {
+                    this.isLoadingData = false;
+                  }
+              }
+            </code></pre>
+
+          </body>
+        </section>
+
+        <section data-transition="slide" data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
+          <h2 class="white">Step 5</h2>
+
+          <body class="white">
+            The template can now use the isLoadingData flag now.
+
+            <pre style="margin: 0; width: 100%"><code class="hljs html" data-trim>
+                    <div class="loader" *ngIf="isLoadingData"></div>
+                    <router-outlet *ngIf="!isLoadingData"></router-outlet>
+            </code></pre>
+
+          </body>
+        </section>
+
+        <section data-transition="slide" data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
+          <h2 class="white">Final Step</h2>
+
+          <body class="white">
+            Lets tweak it with some CSS
+
+            <pre style="margin: 0; width: 100%"><code class="hljs css" data-trim>
+                .loader {
+                  border: 16px solid #f3f3f3; /* Light grey */
+                  border-top: 16px solid #3498db; /* Blue */
+                  border-radius: 50%;
+                  width: 120px;
+                  height: 120px;
+                  animation: spin 2s linear infinite;
+                }
+                @keyframes spin {
+                  0% { transform: rotate(0deg); }
+                  100% { transform: rotate(360deg); }
+                }
+            </code></pre>
+
+          </body>
+        </section>
+
       </section>
 
       <!-- CanDeactivate Guard -->
@@ -150,36 +240,178 @@
 
         <section data-transition="slide" data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
           <h2 class="white">Guard Details</h2>
+
           <body class="white">
-            TODO
+            Currently there are 4 Guards definded by Angular
+            <ul>
+              <li> CanActivate - Decides if a route can be activated</li>
+              <li> CanActivateChild - Decides if children routes of a route can be activated</li>
+              <li> CanDeactivate - Decides if a route can be deactivated</li>
+              <li> CanLoad - Decides if a module can be loaded lazily</li>
+            </ul>
           </body>
         </section>
 
         <section data-transition="slide" data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
           <h2 class="white">Feature Target</h2>
+
           <body class="white">
-            TODO
+            TODO-- start branch - dirty aware interface - guard itself - confirm dialog material-> - can deactivate dialog component
           </body>
         </section>
 
         <section data-transition="slide" data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
           <h2 class="white">Step 1</h2>
+
           <body class="white">
-            TODO
+            Lets define an DirtyAware Interface at
+
+            <pre style="margin: 0; width: 100%"><code class="hljs bash" data-trim>
+                  src/app/shared/routing/dirty-aware.ts
+              </code></pre> And inside:
+            <pre style="margin: 0; width: 100%"><code class="hljs ts" data-trim>
+                  export interface DirtyAware {
+                    isDirty(): boolean;
+                  }
+              </code></pre>
+
           </body>
         </section>
 
         <section data-transition="slide" data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
           <h2 class="white">Step 2</h2>
+
           <body class="white">
-            TODO
+            Now we can create an abstract guard service implementing a CanDeactivate
+            <DirtyAware> interface
+
+              <pre style="margin: 0; width: 100%"><code class="hljs bash" data-trim>
+                      src/app/shared/routing/can-deactivate-guard.service.ts
+                  </code></pre> And inside:
+              <pre style="margin: 0; width: 100%"><code class="hljs ts" data-trim>
+                      @Injectable()
+                      export class CanDeactivateGuard implements CanDeactivate&lt;DirtyAware&gt; {
+                        
+                        canDeactivate(): Observable&lt;boolean&gt; | boolean {
+                          return false;
+                        }
+
+                      }
+                  </code></pre>
+
           </body>
         </section>
 
         <section data-transition="slide" data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
           <h2 class="white">Step 3</h2>
+
           <body class="white">
-            TODO
+            Now, having a dummy guard, lets connect it to our existing Routing at routes.ts
+
+            <pre style="margin: 0; width: 100%"><code class="hljs ts" data-trim>
+                ...
+                  component: BookDetailsComponent,
+                  resolve: {
+                    book: BookDetailsResolver
+                  },
+                  canDeactivate: [CanDeactivateGuard]
+                },
+                {
+                  path: 'book',
+                  component: BookDetailsComponent,
+                  canDeactivate: [CanDeactivateGuard]
+                },
+                ...
+              </code></pre> Try it now.
+
+          </body>
+        </section>
+
+        <section data-transition="slide" data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
+          <h2 class="white">Step 4</h2>
+
+          <body class="white">
+            Naturally, it is not present in the app.module.ts - providers part, adapt it.
+
+            <pre style="margin: 0; width: 100%"><code class="hljs ts" data-trim>
+                  @NgModule({
+                    ...,
+                    imports: [
+                      ...
+                    ],
+                    providers: [CanDeactivateGuard],
+                    bootstrap: [AppComponent]
+                  })
+              </code></pre>
+
+          </body>
+        </section>
+
+        <section data-transition="slide" data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
+          <h2 class="white">Step 5</h2>
+
+          <body class="white">
+            Now it is time to make use of the DirtyAware interface.
+
+            <pre style="margin: 0; width: 100%"><code class="hljs ts" data-trim>
+                export class BookDetailsComponent implements OnInit, DirtyAware {
+            </code></pre> 
+              
+            and the implmementation:
+            <pre style="margin: 0; width: 100%"><code class="hljs ts" data-trim>
+                  isDirty(): boolean {
+                    return this.bookForm.dirty && !this.submitted;
+                  }
+            </code></pre>
+
+          </body>
+        </section>
+
+        <section data-transition="slide" data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
+          <h2 class="white">Step 6</h2>
+
+          <body class="white">
+            The Guard itself also needs to use it
+
+            <pre style="margin: 0; width: 100%"><code class="hljs ts" data-trim>
+                canDeactivate(
+                  component: DirtyAware
+                ): Observable&lt;boolean&gt; | boolean {
+
+                  if (!component.isDirty()) {
+                    return true;
+                  }
+
+                  return false;
+                }
+            </code></pre>
+
+          </body>
+        </section>
+
+        <section data-transition="slide" data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
+          <h2 class="white">Step 7</h2>
+
+          <body class="white">
+            Improve the UX - ask the User now
+
+            <pre style="margin: 0; width: 100%"><code class="hljs ts" data-trim>
+                canDeactivate(
+                  component: DirtyAware
+                  ): Observable&lt;boolean&gt; | boolean {
+                    
+                  if (!component.isDirty()) {
+                    return true;
+                  }
+              
+                  if (confirm('Are you sure to cancel?')) {
+                    return true;
+                  }
+              
+                  return false;
+                }
+            </code></pre>
+
           </body>
         </section>
       </section>
@@ -188,6 +420,7 @@
       <section>
         <section id="canActivateGuard" data-transition="slide" data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
           <h2 class="white">CanActivate</h2>
+
           <body class="white">
             <ul>
               <li>Guard Details</li>
@@ -199,6 +432,7 @@
 
         <section data-transition="slide" data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
           <h2 class="white">Guard Details</h2>
+
           <body class="white">
             TODO
           </body>
@@ -206,6 +440,7 @@
 
         <section data-transition="slide" data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
           <h2 class="white">Feature Target</h2>
+
           <body class="white">
             TODO
           </body>
@@ -213,6 +448,7 @@
 
         <section data-transition="slide" data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
           <h2 class="white">Step 1</h2>
+
           <body class="white">
             TODO
           </body>
@@ -220,6 +456,7 @@
 
         <section data-transition="slide" data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
           <h2 class="white">Step 2</h2>
+
           <body class="white">
             TODO
           </body>
@@ -227,6 +464,7 @@
 
         <section data-transition="slide" data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
           <h2 class="white">Step 3</h2>
+
           <body class="white">
             TODO
           </body>
