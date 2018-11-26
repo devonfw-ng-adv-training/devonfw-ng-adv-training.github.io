@@ -60,12 +60,7 @@
             <li>
               <a href="#/canActivateGuard">CanActivate Guard</a>
             </li>
-            <li>
-              Lazy Loading Routes - TODO
-            </li>
-            <li>
-              child routes - TODO
-            </li>
+<!-- TODO lazy loading and child routes-->
           </ul>
         </body>
       </section>
@@ -155,7 +150,7 @@
                 isLoadingData = false;
                 
                 constructor(private router: Router) {
-                  router.events.subscribe((routerEvent: Event) => {
+                  router.events.subscribe((routerEvent: RouterEvent) => {
                     this.checkRouterEvent(routerEvent);
                   });
                 }
@@ -169,7 +164,7 @@
 
           <body class="white">
             <pre style="margin: 0; width: 100%"><code class="hljs ts" data-trim>
-              checkRouterEvent(routerEvent: Event): void {
+              checkRouterEvent(routerEvent: RouterEvent): void {
                 if (routerEvent instanceof ResolveStart) {
                   this.isLoadingData = true;
                 }
@@ -253,10 +248,25 @@
         </section>
 
         <section data-transition="slide" data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
+          <h2 class="white">Guard Details</h2>
+
+          <body class="white">
+            Detailed description of the mentioned guards with methods that allow its use. TODO
+            <ul>
+              <li> CanActivate - Decides if a route can be activated</li>
+              <li> CanActivateChild - Decides if children routes of a route can be activated</li>
+              <li> CanDeactivate - Decides if a route can be deactivated</li>
+              <li> CanLoad - Decides if a module can be loaded lazily</li>
+            </ul>
+          </body>
+        </section>
+
+        <section data-transition="slide" data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
           <h2 class="white">Feature Target</h2>
 
           <body class="white">
-            TODO-- start branch - dirty aware interface - guard itself - confirm dialog material-> - can deactivate dialog component
+            TODO-- start branch - 1-router-events
+             - dirty aware interface - guard itself - confirm dialog material-> - can deactivate dialog component
           </body>
         </section>
 
@@ -264,7 +274,7 @@
           <h2 class="white">Step 1</h2>
 
           <body class="white">
-            Lets define an DirtyAware Interface at
+            Lets define an DirtyAware Interface at (rename the folder):
 
             <pre style="margin: 0; width: 100%"><code class="hljs bash" data-trim>
                   src/app/shared/routing/dirty-aware.ts
@@ -414,6 +424,96 @@
 
           </body>
         </section>
+
+        <section data-transition="slide" data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
+          <h2 class="white">Step 8*</h2>
+
+          <body class="white">
+            Rework the modal dialog to use the Material Design. Generate a new Component
+
+            <pre style="margin: 0; width: 100%"><code class="hljs ts" data-trim>
+              ng g c can-deactivate-dialog
+          </code></pre>
+
+          </body>
+        </section>
+
+        <section data-transition="slide" data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
+          <h2 class="white">Step 9*</h2>
+
+          <body class="white">
+            Invoke it when the can-deactivate-guard is triggered
+
+            <pre style="margin: 0; width: 100%"><code class="hljs ts" data-trim>
+              constructor(public dialog: MatDialog) {}
+
+              ...
+              const dialogRef = this.dialog.open(CanDeactivateDialogComponent);
+              return dialogRef.afterClosed().pipe(
+                map(result => {
+                  if (result) {
+                    return true;
+                  }
+                    return false;
+                })
+              );
+          </code></pre>
+
+          </body>
+        </section>
+
+        <section data-transition="slide" data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
+          <h2 class="white">Step 10*</h2>
+
+          <body class="white">
+            This does not work now because of a very good reason.
+
+            <pre style="margin: 0; width: 100%"><code class="hljs ts" data-trim>
+                BookModule,
+                MatDialogModule
+              ],
+              entryComponents: [CanDeactivateDialogComponent],
+              providers: [CanDeactivateGuard],
+          </code></pre>
+
+          </body>
+        </section>
+
+        <section data-transition="slide" data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
+          <h2 class="white">Step 11*</h2>
+
+          <body class="white">
+            Now, lets tweak the dialog so it displays something meaningfull.
+
+            <pre style="margin: 0; width: 100%"><code class="hljs ts" data-trim>
+                <h2 mat-dialog-title>Discard changes</h2>
+                <mat-dialog-content>Are you sure?</mat-dialog-content>
+                <mat-dialog-actions>
+                  <button mat-raised-button color="primary" mat-button [mat-dialog-close]="false">No</button>
+                  <button mat-button [mat-dialog-close]="true">Yes</button>
+                </mat-dialog-actions>
+          </code></pre>
+
+          </body>
+        </section>
+
+        <section data-transition="slide" data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
+          <h2 class="white">Step 12*</h2>
+
+          <body class="white">
+            Repair the declarations of the dialog component, so it works.
+
+            <pre style="margin: 0; width: 100%"><code class="hljs ts" data-trim>
+                @NgModule({
+                  declarations: [AppComponent,
+                    CanDeactivateDialogComponent],
+                  imports: [
+          </code></pre>
+
+          </body>
+        </section>
+
+
       </section>
 
       <!-- CanActivate Guard -->
@@ -442,23 +542,7 @@
           <h2 class="white">Feature Target</h2>
 
           <body class="white">
-            TODO
-          </body>
-        </section>
-
-        <section data-transition="slide" data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
-          <h2 class="white">Step 1</h2>
-
-          <body class="white">
-            TODO
-          </body>
-        </section>
-
-        <section data-transition="slide" data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
-          <h2 class="white">Step 2</h2>
-
-          <body class="white">
-            TODO
+            TODO - REENUMERATE!
           </body>
         </section>
 
@@ -466,9 +550,269 @@
           <h2 class="white">Step 3</h2>
 
           <body class="white">
-            TODO
+              Create a Roles Object 
+
+              <pre style="margin: 0; width: 100%"><code class="hljs ts" data-trim>
+                  export enum Role {
+                    ANONYMOUS, ADMIN
+                  }
+            </code></pre>
+
           </body>
         </section>
+
+        <section data-transition="slide" data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
+          <h2 class="white">Step 4</h2>
+
+          <body class="white">
+              Extend the Routes so they are able to hold the Roles that will guard them.
+
+              <pre style="margin: 0; width: 100%"><code class="hljs ts" data-trim>
+                  export interface AuthorizedRoute extends Route {
+                    authorizedRoles?: Role[];
+                    permitAll?: boolean;
+                    children?: AuthorizedRoutes;
+                  }
+
+                  export declare type AuthorizedRoutes = AuthorizedRoute[];
+            </code></pre>
+
+          </body>
+        </section>
+
+        <section data-transition="slide" data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
+          <h2 class="white">Step 5</h2>
+
+          <body class="white">
+              Overwrite the Routing configuration and provide some Role definitions
+
+              <pre style="margin: 0; width: 100%"><code class="hljs ts" data-trim>
+                ...
+                permitAll: true
+                ...
+
+                path: 'book',
+                component: BookDetailsComponent,
+                canDeactivate: [CanDeactivateGuard],
+                authorizedRoles: [Role.ADMIN]
+              },
+            </code></pre>
+
+          </body>
+        </section>
+
+        <section data-transition="slide" data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
+          <h2 class="white">Step 6</h2>
+
+          <body class="white">
+              Provide a bit of magic so the Routing is actually using the Roles. TODO (add-authorization-guards.ts) TODO - show it without the recursive part.
+
+              <pre style="margin: 0; width: 100%"><code class="hljs ts" data-trim>
+                  export function addAuthorizationGuards(routes: Routes): Routes {
+                    addAuthorizationGuardsToRoutesHavingPathsAndComponents(routes);
+                    return routes;
+
+                    function addAuthorizationGuardsToRoutesHavingPathsAndComponents(routesToGuard: Routes) {
+                      for (const route of routesToGuard) {
+                        if (route.path && route.component) {
+                          route.canActivate = route.canActivate || [];
+                          route.canActivate.push(ActivateIfUserAuthorized);
+                        }
+                        if (route.children) {
+                          addAuthorizationGuardsToRoutesHavingPathsAndComponents(route.children);
+                        }
+                      }
+                    }
+                  }
+            </code></pre>
+
+          </body>
+        </section>
+
+        <section data-transition="slide" data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
+          <h2 class="white">Step 7_1</h2>
+
+          <body class="white">
+             Now implement the overwritten guard.
+
+              <pre style="margin: 0; width: 100%"><code class="hljs ts" data-trim>
+                  @Injectable()
+                  export class ActivateIfUserAuthorized implements CanActivate {
+                    constructor(private security: SecurityService, private router: Router) {}
+                  
+                    canActivate(route: ActivatedRouteSnapshot): Observable<boolean> | boolean {
+                      if (route && route.routeConfig && route.routeConfig['permitAll']) {
+                        return true;
+                      }
+            </code></pre>
+
+          </body>
+        </section>
+
+        <section data-transition="slide" data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
+          <h2 class="white">Step 7_2</h2>
+
+          <body class="white">
+              <pre style="margin: 0; width: 100%"><code class="hljs ts" data-trim>
+                  if (route && route.routeConfig && route.routeConfig['authorizedRoles']) {
+                    const routeAuthorizedRoles: Role[] = route.routeConfig['authorizedRoles'];
+                    return this.security.getCurrentUserRoles().pipe(
+                      map((roles: Role[]) =>
+                        roles.reduce(
+                          (prev, role) => routeAuthorizedRoles.includes(role) || prev,
+                          false
+                        )
+                      ),
+                      catchError(() => of(false))
+                    );
+                  }
+                  return false;
+                }
+              }
+            </code></pre>
+
+          </body>
+        </section>
+
+        <section data-transition="slide" data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
+          <h2 class="white">Step 8</h2>
+
+          <body class="white">
+            Create a Security Service that returns the current User-Roles.
+
+              <pre style="margin: 0; width: 100%"><code class="hljs ts" data-trim>
+@Injectable()
+export class SecurityService {
+
+  currentRoles: Role[] = [Role.ADMIN, Role.ANONYMOUS];
+
+  getCurrentUserRoles(): Observable<Role[]> {
+    return of(this.currentRoles);
+  }
+}
+            </code></pre>
+
+          </body>
+        </section>
+        
+        <section data-transition="slide" data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
+          <h2 class="white">Step 9</h2>
+
+          <body class="white">
+            Invoke the previously defined method, so the Router Config is actually reseted.
+
+              <pre style="margin: 0; width: 100%"><code class="hljs ts" data-trim>
+                  export class AppModule {
+                    constructor (private router: Router) {
+                          // add security checkers
+                          router.resetConfig(addAuthorizationGuards(routes));
+                    }
+            </code></pre>
+
+          </body>
+        </section>
+        
+        <section data-transition="slide" data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
+          <h2 class="white">Step 10</h2>
+
+          <body class="white">
+            Now provide the Service and Guard. Then see if everything is working okay. Play with it changing the Roles that the Service returns.
+
+              <pre style="margin: 0; width: 100%"><code class="hljs ts" data-trim>
+                  providers: [BookService,
+                  ActivateIfUserAuthorized,
+                  SecurityService]          
+            </code></pre>
+
+          </body>
+        </section>
+
+        
+        <section data-transition="slide" data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
+          <h2 class="white">Step 1</h2>
+
+          <body class="white">
+            Provide a bar with a slider so one can switch the roles on and off. TODO (where)
+
+              <pre style="margin: 0; width: 100%"><code class="hljs ts" data-trim>
+                  <mat-card class="admin-menu">Anonymous<mat-slide-toggle>Admin</mat-slide-toggle></mat-card>
+            </code></pre>
+            and style it
+
+            <pre style="margin: 0; width: 100%"><code class="hljs ts" data-trim>
+                .admin-menu {
+                  background-color: #3498db;
+                }
+          </code></pre>
+
+          </body>
+        </section>
+
+        <section data-transition="slide" data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
+          <h2 class="white">Step 2</h2>
+
+          <body class="white">
+              Import it in the app.module so it runs smoothly.
+
+              <pre style="margin: 0; width: 100%"><code class="hljs ts" data-trim>
+                  BookModule,
+                  MatDialogModule,
+                  MatSlideToggleModule
+                ],
+                entryComponents: [CanDeactivateDialogComponent],
+            </code></pre>
+
+          </body>
+        </section>
+        
+        <section data-transition="slide" data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
+          <h2 class="white">Step 11</h2>
+
+          <body class="white">
+            Make use of the slider!
+
+              <pre style="margin: 0; width: 100%"><code class="hljs ts" data-trim>
+                  <mat-card class="admin-menu">Anonymous<mat-slide-toggle (change)="slideUpdate($event)">Admin</mat-slide-toggle></mat-card>
+            </code></pre>
+
+          </body>
+        </section>
+        
+        <section data-transition="slide" data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
+          <h2 class="white">Step 12</h2>
+
+          <body class="white">
+            Implement event handling
+
+              <pre style="margin: 0; width: 100%"><code class="hljs ts" data-trim>
+  slideUpdate(e: Event) {
+    console.log('Changing App Roles');
+    this.securityService.changeRoleTo(e['checked']);
+  }
+            </code></pre>
+
+          </body>
+        </section>
+
+        <section data-transition="slide" data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiBlue_RGB.svg">
+          <h2 class="white">Step 13</h2>
+
+          <body class="white">
+            Provide an implememntation to the Security Service.
+
+              <pre style="margin: 0; width: 100%"><code class="hljs ts" data-trim>
+        changeRoleTo(isAdmin: boolean) {
+          if (isAdmin) {
+            this.currentRoles = [Role.ADMIN];
+          } else {
+            this.currentRoles = [Role.ANONYMOUS];
+          }
+        }
+      </code></pre>
+
+    </body>
+  </section>
+
       </section>
 
     </div>
