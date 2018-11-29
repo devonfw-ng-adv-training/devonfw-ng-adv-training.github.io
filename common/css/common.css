@@ -88,6 +88,12 @@
     --secondary-font-family: 'Verdana';
   }
   
+  .slides .footer{
+    position:absolute;
+    bottom: -70%;
+    left: -10%;
+    text-align: left;
+  }
   
   /*
    ---------    General look  -----------
