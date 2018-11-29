@@ -106,8 +106,13 @@
           <h2 class="white">Feature Target</h2>
 
           <body class="white">
-            TODO
+            Display a spinner in case the application is waiting for the data being loaded and seems not to be responding.
           </body>
+              <div class="footer">
+                  Start Branch: 0-start
+                  <br> 
+                  End Branch: 1-router-events
+                </div>
         </section>
 
         <section data-transition="slide" data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiLightBlue_RGB.svg">
@@ -335,9 +340,13 @@ interface CanLoad {
           <h2 class="white">Feature Target</h2>
 
           <body class="white">
-            TODO-- start branch - 1-router-events
-             - dirty aware interface - guard itself - confirm dialog material-> - can deactivate dialog component
+            Prevent the user from leaving a dirty form unless he confirms his actions.
           </body>
+          <div class="footer">
+              Start Branch: 1-router-events
+              <br> 
+              End Branch: 2-can-deactivate
+            </div>
         </section>
 
         <section data-transition="slide" data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiLightBlue_RGB.svg">
@@ -603,8 +612,13 @@ interface CanLoad {
           <h2 class="white">Feature Target</h2>
 
           <body class="white">
-            TODO
+            Allow adding new Books only for those Users having a concrete permission.
           </body>
+          <div class="footer">
+              Start Branch: 2-can-deactivate
+              <br> 
+              End Branch: 3-authorization
+            </div>
         </section>
 
         <section data-transition="slide" data-background-image="../common/img/shapes/Fixed_Shape_3_SVG/Fixed_Shape_3_CapgeminiLightBlue_RGB.svg">
@@ -683,7 +697,7 @@ interface CanLoad {
           <h2 class="white">Step 5</h2>
 
           <body class="white">
-              Provide a bit of magic so the Routing is actually using the Roles. TODO (add-authorization-guards.ts) TODO - show it without the recursive part.
+              Provide a bit of magic so the Routing is actually using the Roles. (File: add-authorization-guards.ts)
 
               <pre style="margin: 0; width: 100%"><code class="hljs ts" data-trim>
                   export function addAuthorizationGuards(routes: Routes): Routes {
@@ -793,7 +807,7 @@ export class SecurityService {
           <h2 class="white">Step 9</h2>
 
           <body class="white">
-            Provide a bar with a slider so one can switch the roles on and off. TODO (where)
+            Provide a bar with a slider so one can switch the roles on and off. (File: app.component.html)
 
               <pre style="margin: 0; width: 100%"><code class="hljs ts" data-trim>
                   <mat-card class="admin-menu">Anonymous
